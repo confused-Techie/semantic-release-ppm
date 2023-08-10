@@ -1,7 +1,7 @@
-const execa = require("execa");
-const superagent = require("superagent");
+import execa from "execa";
+import superagent from "superagent";
 
-module.exports = async(pkg, pluginConfig, context) => {
+export default async function (pkg, pluginConfig, context) {
 
   // Since we will allow users to either use PPM if they've installed CI or prefer
   // it for whatever reason we will check for a PPM option in their config.
@@ -42,7 +42,7 @@ module.exports = async(pkg, pluginConfig, context) => {
     context.logger.log(`Published ${pkg.name}@${context.nextRelease.version}`);
     return { name: pkg.name, url: `https://web.pulsar-edit.dev/packages/${pkg.name}` };
   }
-};
+}
 
 function getPackTypePath(pkg) {
   const packPath = "packages";

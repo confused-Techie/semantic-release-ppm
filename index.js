@@ -1,8 +1,8 @@
-const AggregateError = require("aggregate-error");
-const verify = require("./src/verify.js");
-const preparePPM = require("./src/prepare.js");
-const publishPPM = require("./publish.js");
-const getPkg = require("./get-pkg.js");
+import AggregateError from "aggregate-error";
+import verify from "./src/verify.js";
+import preparePPM from "./src/prepare.js";
+import publishPPM from "./src/publish.js";
+import getPkg from "./src/get-pkg.js";
 
 let verified, prepared;
 
@@ -12,7 +12,7 @@ let verified, prepared;
   * @param {*} context - The context provided by semantic-release.
   * @see {@link https://github.com/semantic-release/semantic-release/blob/master/docs/developer-guide/plugin.md}
  */
-async function verifyConditions(pluginConfig, context) {
+export async function verifyConditions(pluginConfig, context) {
   let errors = await verify(pluginConfig, context);
 
   try {
@@ -28,7 +28,7 @@ async function verifyConditions(pluginConfig, context) {
   }
 }
 
-async function prepare(pluginConfig, context) {
+export async function prepare(pluginConfig, context) {
   const errors = verified ? [] : await verify(pluginConfig, context);
 
   try {
@@ -52,7 +52,7 @@ async function prepare(pluginConfig, context) {
   * @param {*} context - The context provided by semantic-release.
   * @see {@link }
  */
-async function publish(pluginConfig, context) {
+export async function publish(pluginConfig, context) {
   let pkg;
   const errors = verified ? [] : await verifyPPM(pluginConfig, context);
 
@@ -65,7 +65,7 @@ async function publish(pluginConfig, context) {
   if (errors.length > 0) {
     throw new AggregateError(errors);
   }
-  
+
   if (!prepared) {
     await preparePPM(pluginConfig, context);
     prepared = true;
@@ -73,9 +73,3 @@ async function publish(pluginConfig, context) {
 
   return publishPPM(pkg, pluginConfig, context);
 }
-
-module.exports = {
-  verifyConditions,
-  prepare,
-  publish,
-};

@@ -1,8 +1,8 @@
-const readPkg = require("read-pkg");
-const AggregateError = require("aggregate-error");
-const getError = require("./get-error.js");
+import readPkg from "read-pkg";
+import AggregateError from "aggregate-error";
+import getError from "./get-error.js";
 
-module.exports = async(pluginConfig, context) => {
+export default async function (pluginConfig, context) {
   try {
     const pkg = await readPkg({ context.cwd });
 
@@ -15,4 +15,4 @@ module.exports = async(pluginConfig, context) => {
     const error = err.code === "ENOENT" ? new AggregateError([getError("ENOPKG")]) : new AggregateError([err]);
     throw error;
   }
-};
+}

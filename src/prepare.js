@@ -1,5 +1,5 @@
-const execa = require("execa");
-const path = require("path");
+import execa from "execa";
+import path from "path";
 
 /**
   * @desc Handles the logic of writing the new version to the `package.json`
@@ -7,7 +7,7 @@ const path = require("path");
   * @param {*} context - The context provided by semantic-release.
   * @see {@link https://github.com/semantic-release/npm/ }
  */
-module.exports = async(pluginConfig, context) => {
+export default async function (pluginConfig, context) {
   // The below is borrowed heavily from `@semantic-release/npm`
   const basePath = pluginConfig.pkgRoot ? path.resolve(context.cwd, pluginConfig.pkgRoot) : context.cwd;
   const version = context.nextRelease.version;
@@ -28,4 +28,4 @@ module.exports = async(pluginConfig, context) => {
   versionResult.stderr.pipe(context.stderr, { end: false });
 
   await versionResult;
-};
+}

@@ -1,6 +1,6 @@
-const getError = require("./get-error.js");
+import getError from "./get-error.js";
 
-module.exports = async(pluginConfig, context) => {
+export default async function (pluginConfig, context) {
   let errors = [];
 
   let apmToken = context.env.ATOM_ACCESS_TOKEN;
@@ -12,4 +12,4 @@ module.exports = async(pluginConfig, context) => {
   }
 
   return errors;
-};
+}
