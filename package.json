@@ -9,6 +9,7 @@
   "keywords": [],
   "author": "confused-Techie",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "@semantic-release/error": "^3.0.0",
     "aggregate-error": "^4.0.1",
